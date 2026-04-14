@@ -34,7 +34,65 @@ const C = {
   header: '#0d0719',
   sidebar: '#0d0719',
 };
+const PROJECTS = [
+  {
+    name: 'AI Workflow Builder',
+    desc: 'Visual AI tool that converts manual business workflows into automation plans',
+    tech: ['React', 'Node.js', 'Gemini API', 'React Flow'],
+    live: 'https://ai-workflow-builder-q87o.vercel.app/',
+    github: 'https://github.com/toobahasnain/ai-workflow-builder',
+    color: '#7c3aed'
+  },
+  {
+    name: 'Istravo',
+    desc: 'AI-powered travel discovery platform with personalised recommendations',
+    tech: ['JavaScript', 'OpenAI API', 'REST API'],
+    live: 'https://celerinnovations.com/staging/istravo/home1/',
+    github: '',
+    color: '#059669'
+  },
+  {
+    name: 'MyPharmacyShop',
+    desc: 'Fully customised Shopify e-commerce store with custom Liquid theme',
+    tech: ['Shopify', 'Liquid', 'JavaScript', 'CSS'],
+    live: 'https://mypharmacyshop.co.uk/',
+    github: '',
+    color: '#d97706'
+  },
+  {
+    name: 'Rewellx',
+    desc: 'Clean responsive frontend website',
+    tech: ['WordPress', 'HTML', 'CSS', 'JavaScript'],
+    live: 'https://rewellx.com/',
+    github: '',
+    color: '#0891b2'
+  },
+];
 
+function detectProjects(text: string) {
+  if (!text) return [];
+  const lower = text.toLowerCase();
+  const matched = new Set<string>();
+
+  PROJECTS.forEach(p => {
+    if (lower.includes(p.name.toLowerCase())) matched.add(p.name);
+  });
+
+  if (lower.includes('wordpress') || lower.includes('woocommerce')) {
+    ['MyPharmacyShop', 'Rewellx'].forEach(n => matched.add(n));
+  }
+  if (lower.includes('shopify')) matched.add('MyPharmacyShop');
+  if (lower.includes('openai api')) matched.add('Istravo');
+  if (lower.includes('react flow') || lower.includes('workflow builder') || lower.includes('automation platform')) matched.add('AI Workflow Builder');
+
+  const showAllTerms = ['all my projects', 'all projects', 'alle projekte', 'meine projekte', 'show projects', 'portfolio', 'what have you built', 'what did you build', 'zeig mir'];
+  const isShowAll = showAllTerms.some(t => lower.includes(t));
+  if (isShowAll) {
+    PROJECTS.forEach(p => matched.add(p.name));
+  }
+
+  return PROJECTS.filter(p => matched.has(p.name));
+}
 export default function Home() {
   const [language, setLanguage] = useState<'en' | 'de'>('en');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -44,7 +102,13 @@ export default function Home() {
   const [savedConversations, setSavedConversations] = useState<{id: string, title: string, messages: Message[], time: string}[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
+const copyMessage = (text: string, index: number) => {
+  navigator.clipboard.writeText(text);
+  setCopiedIndex(index);
+  setTimeout(() => setCopiedIndex(null), 2000);
+};
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -136,7 +200,15 @@ export default function Home() {
 
           <div style={{display:'flex', alignItems:'center', gap:'8px'}}>
             <span style={{fontSize:'11px', color:C.textMuted}} className="hide-mobile">Augsburg, DE</span>
-
+            <a href="/Syeda_Tooba_Hasnain_CV.pdf" download="Syeda_Tooba_Hasnain_CV.pdf"
+  style={{display:'flex', alignItems:'center', gap:'5px', background:C.accentBg, border:`1px solid ${C.accentBorder}`, borderRadius:'8px', padding:'5px 12px', textDecoration:'none', flexShrink:0}}>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.accentLight} strokeWidth="2">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7 10 12 15 17 10"/>
+    <line x1="12" y1="15" x2="12" y2="3"/>
+  </svg>
+  <span style={{fontSize:'11px', color:C.accentLight, fontWeight:600}}>CV</span>
+</a>
             {/* Language toggle — visible on all screens */}
             <button onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}
               style={{display:'flex', alignItems:'center', gap:'4px', background:C.bgCard, border:`1px solid ${C.borderHover}`, borderRadius:'8px', padding:'5px 10px', fontSize:'11px', fontWeight:700, cursor:'pointer', color:C.textSub}}>
@@ -230,27 +302,75 @@ export default function Home() {
             </div>
 
             {/* Messages */}
-            {messages.map((msg, i) => (
-              <div key={i} style={{display:'flex', gap:'12px', alignItems:'flex-start', flexDirection: msg.role === 'user' ? 'row-reverse' : 'row'}}>
-                <div style={{width:'34px', height:'34px', borderRadius:'50%', flexShrink:0, overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
-                  background: msg.role === 'user' ? C.bgHover : 'transparent',
-                  border: msg.role === 'user' ? `1px solid ${C.borderHover}` : 'none'}}>
-                  {msg.role === 'user'
-                    ? <span style={{fontSize:'11px', color:C.textSub, fontWeight:600}}>{language === 'en' ? 'You' : 'Du'}</span>
-                    : <img src="/images/tooba.jpg" alt="Tooba" style={{width:'34px', height:'34px', objectFit:'cover', objectPosition:'center 15%', borderRadius:'50%', border:`2px solid ${C.accent}`}} />
-                  }
-                </div>
-                <div style={{
-                  padding:'12px 16px', maxWidth:'580px', fontSize:'13px', lineHeight:1.75, whiteSpace:'pre-wrap',
-                  background: msg.role === 'user' ? C.accentBg : C.bgCard,
-                  border: `1px solid ${msg.role === 'user' ? C.accentBorder : C.border}`,
-                  borderRadius: msg.role === 'user' ? '16px 0 16px 16px' : '0 16px 16px 16px',
-                  color: C.text
-                }}>
-                  {msg.content}
-                </div>
+            {messages.map((msg, i) => {
+  const detectedProjects = msg.role === 'assistant' ? detectProjects(msg.content) : [];
+  return (
+    <div key={i}>
+      <div style={{display:'flex', gap:'12px', alignItems:'flex-start', flexDirection: msg.role === 'user' ? 'row-reverse' : 'row'}}>
+        <div style={{width:'34px', height:'34px', borderRadius:'50%', flexShrink:0, overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
+          background: msg.role === 'user' ? C.bgHover : 'transparent',
+          border: msg.role === 'user' ? `1px solid ${C.borderHover}` : 'none'}}>
+          {msg.role === 'user'
+            ? <span style={{fontSize:'11px', color:C.textSub, fontWeight:600}}>{language === 'en' ? 'You' : 'Du'}</span>
+            : <img src="/images/tooba.jpg" alt="Tooba" style={{width:'34px', height:'34px', objectFit:'cover', objectPosition:'center 15%', borderRadius:'50%', border:`2px solid ${C.accent}`}} />
+          }
+        </div>
+        <div style={{
+  padding:'12px 16px', maxWidth:'580px', fontSize:'13px', lineHeight:1.75, whiteSpace:'pre-wrap',
+  background: msg.role === 'user' ? C.accentBg : C.bgCard,
+  border: `1px solid ${msg.role === 'user' ? C.accentBorder : C.border}`,
+  borderRadius: msg.role === 'user' ? '16px 0 16px 16px' : '0 16px 16px 16px',
+  color: C.text, position:'relative'
+}}>
+  {msg.content.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\*\*/g, '')}
+  {msg.role === 'assistant' && (
+    <button
+      onClick={() => copyMessage(msg.content, i)}
+      style={{position:'absolute', bottom:'8px', right:'8px', background:'transparent', border:'none', cursor:'pointer', opacity: copiedIndex === i ? 1 : 0.3, transition:'opacity 0.2s', padding:'2px'}}
+      title="Copy">
+      {copiedIndex === i
+        ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+        : <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.textSub} strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      }
+    </button>
+  )}
+</div>
+      </div>
+
+      {detectedProjects.length > 0 && (
+        <div style={{marginLeft:'46px', marginTop:'8px', display:'flex', flexWrap:'wrap', gap:'10px'}}>
+          {detectedProjects.map(project => (
+            <div key={project.name} style={{
+              background:C.bgCard, border:`1px solid ${C.border}`,
+              borderRadius:'12px', padding:'12px 14px', maxWidth:'260px',
+              borderTop:`3px solid ${project.color}`, transition:'border-color 0.2s'
+            }}>
+              <p style={{fontSize:'13px', fontWeight:600, color:C.text, margin:'0 0 4px'}}>{project.name}</p>
+              <p style={{fontSize:'11px', color:C.textSub, margin:'0 0 8px', lineHeight:1.5}}>{project.desc}</p>
+              <div style={{display:'flex', flexWrap:'wrap', gap:'4px', marginBottom:'10px'}}>
+                {project.tech.map(t => (
+                  <span key={t} style={{fontSize:'10px', color:C.textMuted, background:C.bgHover, padding:'1px 6px', borderRadius:'3px'}}>{t}</span>
+                ))}
               </div>
-            ))}
+              <div style={{display:'flex', gap:'6px'}}>
+                <a href={project.live} target="_blank" rel="noopener noreferrer"
+                  style={{fontSize:'11px', color:'white', background:project.color, padding:'4px 10px', borderRadius:'6px', textDecoration:'none', fontWeight:600}}>
+                  Live →
+                </a>
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer"
+                    style={{fontSize:'11px', color:C.textSub, background:C.bgHover, border:`1px solid ${C.border}`, padding:'4px 10px', borderRadius:'6px', textDecoration:'none'}}>
+                    GitHub
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+})}
 
             {/* Loading */}
             {loading && (

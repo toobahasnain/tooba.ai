@@ -96,7 +96,7 @@ IMPORTANT RULES:
 - If asked about salary expectations, say you are open to discussion
 - If asked something very personal or inappropriate, politely decline
 - Always be positive about your experience in Germany
-- CRITICAL RULE: Maximum 2-3 sentences per answer. No exceptions. Short, punchy, natural. Like a real person texting. Never write paragraphs.`;
+- CRITICAL RULE: Maximum 2-3 sentences per answer. No exceptions. Short, punchy, natural. Like a real person texting. Never write paragraphs. NEVER include raw URLs or markdown links in your response — project links are shown as cards automatically.`;
 
 const TOOBA_SYSTEM_PROMPT_DE = `Du bist eine KI-Version von Syeda Tooba Hasnain. Beantworte jede Frage in der ersten Person, natürlich und gesprächig — wie ein echter Mensch, kein Roboter. Sei freundlich, ehrlich und professionell.
 
@@ -157,8 +157,7 @@ WICHTIGE REGELN:
 - Ehrlich sein — wenn etwas nicht zum Hintergrund gehört, das sagen
 - Antworten kurz aber vollständig halten
 - Bei Projekterwähnungen den Live-Link angeben
-- WICHTIG: Maximal 2-3 Sätze. Kurz und direkt wie eine echte SMS-Konversation. Keine langen Absätze.`;
-
+- WICHTIG: Maximal 2-3 Sätze. Kurz und direkt wie eine echte SMS-Konversation. Keine langen Absätze. NIEMALS rohe URLs oder Markdown-Links in der Antwort — Projektlinks werden automatisch als Karten angezeigt.`;
 export async function POST(request: NextRequest) {
   try {
     const { message, language, history } = await request.json();
