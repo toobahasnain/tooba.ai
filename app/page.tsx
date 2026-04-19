@@ -231,17 +231,18 @@ const copyMessage = (text: string, index: number) => {
         </div>
 
         {/* Skills */}
-        <div style={{display:'flex', flexWrap:'wrap', gap:'5px', marginTop:'10px'}}>
-          {['React','Next.js','TypeScript','JavaScript','PHP','HTML·CSS'].map(s=>(
-            <span key={s} style={{background:C.accentBg, color:C.accentLight, fontSize:'10px', padding:'2px 9px', borderRadius:'4px', border:`1px solid ${C.accentBorder}`}}>{s}</span>
-          ))}
-          {['Gemini API','OpenAI API','REST APIs','AI Automation'].map(s=>(
-            <span key={s} style={{background:C.greenBg, color:C.green, fontSize:'10px', padding:'2px 9px', borderRadius:'4px', border:`1px solid ${C.greenBorder}`}}>{s}</span>
-          ))}
-          {['Shopify','WordPress','WooCommerce','CMS'].map(s=>(
-            <span key={s} style={{background:C.orangeBg, color:C.orange, fontSize:'10px', padding:'2px 9px', borderRadius:'4px', border:`1px solid ${C.orangeBorder}`}}>{s}</span>
-          ))}
-        </div>
+        {/* Skills - hidden on mobile, shown on desktop */}
+<div className="skills-desktop" style={{display:'flex', flexWrap:'wrap', gap:'5px', marginTop:'10px'}}>
+  {['React','Next.js','TypeScript','JavaScript','PHP','HTML·CSS'].map(s=>(
+    <span key={s} style={{background:C.accentBg, color:C.accentLight, fontSize:'10px', padding:'2px 9px', borderRadius:'4px', border:`1px solid ${C.accentBorder}`}}>{s}</span>
+  ))}
+  {['Gemini API','OpenAI API','REST APIs','AI Automation'].map(s=>(
+    <span key={s} style={{background:C.greenBg, color:C.green, fontSize:'10px', padding:'2px 9px', borderRadius:'4px', border:`1px solid ${C.greenBorder}`}}>{s}</span>
+  ))}
+  {['Shopify','WordPress','WooCommerce','CMS'].map(s=>(
+    <span key={s} style={{background:C.orangeBg, color:C.orange, fontSize:'10px', padding:'2px 9px', borderRadius:'4px', border:`1px solid ${C.orangeBorder}`}}>{s}</span>
+  ))}
+</div>
       </header>
 
       {/* BODY */}
@@ -437,7 +438,12 @@ const copyMessage = (text: string, index: number) => {
         }
         input::placeholder { color: #4a3d6e; }
         button:hover { opacity: 0.9; }
-      `}</style>
+        @media (max-width: 768px) {
+  .skills-desktop { display: none !important; }
+}
+      `}
+      
+      </style>
     </div>
   );
 }
