@@ -394,7 +394,7 @@ const copyMessage = (text: string, index: number) => {
             <div style={{display:'flex', gap:'8px', background:C.bgCard, border:`1px solid ${C.borderHover}`, borderRadius:'12px', padding:'10px 14px'}}>
               <input type="text" value={input}
                 onChange={e => setInput(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && sendMessage(input)}
+                onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); sendMessage(input); }}}
                 placeholder={language === 'en' ? 'Ask me anything about Tooba...' : 'Frag mich alles über Tooba...'}
                 style={{flex:1, background:'transparent', border:'none', outline:'none', fontSize:'13px', color:C.text}} />
               <button onClick={() => sendMessage(input)} disabled={loading || !input.trim()}
