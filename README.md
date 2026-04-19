@@ -75,19 +75,15 @@ When the language is switched to DE, the entire system prompt switches to German
 
 ## Project Structure
 
-tooba-ai/
-├── app/
-│   ├── api/
-│   │   └── chat/
-│   │       └── route.ts      # Gemini API integration + system prompt
-│   ├── page.tsx               # Main chat UI
-│   ├── layout.tsx             # App layout + metadata
-│   └── globals.css            # Global styles
-├── public/
-│   ├── images/
-│   │   └── tooba.jpg          # Profile photo
-│   └── Syeda_Tooba_Hasnain_CV.pdf
-└── .env.local                 # API key (not committed)
+| File | Purpose |
+|------|---------|
+| `app/api/chat/route.ts` | Gemini API integration + system prompt |
+| `app/page.tsx` | Main chat UI |
+| `app/layout.tsx` | App layout + metadata |
+| `app/globals.css` | Global styles |
+| `public/images/tooba.jpg` | Profile photo |
+| `public/Syeda_Tooba_Hasnain_CV.pdf` | Downloadable CV |
+| `.env.local` | API key — not committed |
 
 ---
 
