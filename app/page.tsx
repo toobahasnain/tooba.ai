@@ -497,14 +497,22 @@ const copyMessage = (text: string, index: number) => {
           </div>
 
           {contactStatus === 'error' && (
-            <p style={{fontSize:'12px', color:'#f87171', margin:0}}>
-              {language === 'en' ? 'Something went wrong. Please email me directly at toobadeutsch@gmail.com' : 'Etwas ist schiefgelaufen. Schreib mir direkt an toobadeutsch@gmail.com'}
-            </p>
-          )}
+  <p style={{fontSize:'12px', color:'#f87171', margin:0}}>
+    {!contactForm.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+      ? (language === 'en' ? 'Please enter a valid email address.' : 'Bitte gib eine gültige E-Mail-Adresse ein.')
+      : (language === 'en' ? 'Something went wrong. Please email me directly at toobadeutsch@gmail.com' : 'Etwas ist schiefgelaufen. Schreib mir direkt an toobadeutsch@gmail.com')
+    }
+  </p>
+)}
 
           <button
             onClick={async () => {
-              if (!contactForm.name || !contactForm.email || !contactForm.message) return;
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!contactForm.name || !contactForm.email || !contactForm.message) return;
+if (!emailRegex.test(contactForm.email)) {
+  setContactStatus('error');
+  return;
+}
               setContactStatus('sending');
               try {
                 await emailjs.send(
