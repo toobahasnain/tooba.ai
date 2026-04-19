@@ -1,5 +1,5 @@
 'use client';
-
+import emailjs from '@emailjs/browser';
 import { useState, useRef, useEffect } from 'react';
 
 interface Message {
@@ -101,6 +101,9 @@ export default function Home() {
   const [activeConvId, setActiveConvId] = useState<string>('new');
   const [savedConversations, setSavedConversations] = useState<{id: string, title: string, messages: Message[], time: string}[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showContact, setShowContact] = useState(false);
+const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+const [contactStatus, setContactStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
@@ -212,6 +215,13 @@ const copyMessage = (text: string, index: number) => {
 
           <div style={{display:'flex', alignItems:'center', gap:'8px'}}>
             <span style={{fontSize:'11px', color:C.textMuted}} className="hide-mobile">Augsburg, DE</span>
+            <button onClick={() => setShowContact(true)}
+  style={{display:'flex', alignItems:'center', gap:'5px', background:C.greenBg, border:`1px solid ${C.greenBorder}`, borderRadius:'8px', padding:'5px 12px', cursor:'pointer', flexShrink:0}}>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="2">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <span style={{fontSize:'11px', color:C.green, fontWeight:600}}>{language === 'en' ? 'Contact' : 'Kontakt'}</span>
+</button>
             <a href="/Syeda_Tooba_Hasnain_CV.pdf" download="Syeda_Tooba_Hasnain_CV.pdf"
   style={{display:'flex', alignItems:'center', gap:'5px', background:C.accentBg, border:`1px solid ${C.accentBorder}`, borderRadius:'8px', padding:'5px 12px', textDecoration:'none', flexShrink:0}}>
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.accentLight} strokeWidth="2">
@@ -418,7 +428,112 @@ const copyMessage = (text: string, index: number) => {
           </div>
         </main>
       </div>
+{/* CONTACT MODAL */}
+{showContact && (
+  <div style={{position:'fixed', inset:0, background:'rgba(0,0,0,0.8)', zIndex:50, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px'}}
+    onClick={(e) => { if (e.target === e.currentTarget) setShowContact(false); }}>
+    <div style={{background:C.bgCard, border:`1px solid ${C.border}`, borderRadius:'16px', padding:'28px', width:'100%', maxWidth:'440px'}}>
+      
+      <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'20px'}}>
+        <div>
+          <h2 style={{fontSize:'16px', fontWeight:700, color:C.text, margin:0}}>
+            {language === 'en' ? 'Get in touch' : 'Kontakt aufnehmen'}
+          </h2>
+          <p style={{fontSize:'12px', color:C.textSub, margin:'4px 0 0'}}>
+            {language === 'en' ? "I'll reply to your email directly" : 'Ich antworte direkt auf deine E-Mail'}
+          </p>
+        </div>
+        <button onClick={() => { setShowContact(false); setContactStatus('idle'); }}
+          style={{background:'transparent', border:'none', cursor:'pointer', color:C.textSub, fontSize:'20px', lineHeight:1}}>✕</button>
+      </div>
 
+      {contactStatus === 'sent' ? (
+        <div style={{textAlign:'center', padding:'30px 0'}}>
+          <div style={{fontSize:'40px', marginBottom:'12px'}}>✅</div>
+          <p style={{fontSize:'15px', fontWeight:600, color:C.green, margin:'0 0 6px'}}>
+            {language === 'en' ? 'Message sent!' : 'Nachricht gesendet!'}
+          </p>
+          <p style={{fontSize:'13px', color:C.textSub, margin:0}}>
+            {language === 'en' ? "I'll get back to you soon." : 'Ich melde mich bald.'}
+          </p>
+        </div>
+      ) : (
+        <div style={{display:'flex', flexDirection:'column', gap:'12px'}}>
+          <div>
+            <label style={{fontSize:'11px', color:C.textSub, display:'block', marginBottom:'6px', fontWeight:600}}>
+              {language === 'en' ? 'Your name' : 'Dein Name'}
+            </label>
+            <input
+              type="text"
+              value={contactForm.name}
+              onChange={e => setContactForm(p => ({...p, name: e.target.value}))}
+              placeholder={language === 'en' ? 'Max Mustermann' : 'Max Mustermann'}
+              style={{width:'100%', background:C.bgHover, border:`1px solid ${C.border}`, borderRadius:'8px', padding:'10px 12px', color:C.text, fontSize:'13px', outline:'none'}}
+            />
+          </div>
+          <div>
+            <label style={{fontSize:'11px', color:C.textSub, display:'block', marginBottom:'6px', fontWeight:600}}>
+              {language === 'en' ? 'Your email' : 'Deine E-Mail'}
+            </label>
+            <input
+              type="email"
+              value={contactForm.email}
+              onChange={e => setContactForm(p => ({...p, email: e.target.value}))}
+              placeholder="max@example.com"
+              style={{width:'100%', background:C.bgHover, border:`1px solid ${C.border}`, borderRadius:'8px', padding:'10px 12px', color:C.text, fontSize:'13px', outline:'none'}}
+            />
+          </div>
+          <div>
+            <label style={{fontSize:'11px', color:C.textSub, display:'block', marginBottom:'6px', fontWeight:600}}>
+              {language === 'en' ? 'Message' : 'Nachricht'}
+            </label>
+            <textarea
+              value={contactForm.message}
+              onChange={e => setContactForm(p => ({...p, message: e.target.value}))}
+              placeholder={language === 'en' ? "Hi Tooba, I'd like to discuss a working student opportunity..." : 'Hallo Tooba, ich würde gerne über eine Werkstudentenstelle sprechen...'}
+              rows={4}
+              style={{width:'100%', background:C.bgHover, border:`1px solid ${C.border}`, borderRadius:'8px', padding:'10px 12px', color:C.text, fontSize:'13px', outline:'none', resize:'vertical', fontFamily:'inherit'}}
+            />
+          </div>
+
+          {contactStatus === 'error' && (
+            <p style={{fontSize:'12px', color:'#f87171', margin:0}}>
+              {language === 'en' ? 'Something went wrong. Please email me directly at toobadeutsch@gmail.com' : 'Etwas ist schiefgelaufen. Schreib mir direkt an toobadeutsch@gmail.com'}
+            </p>
+          )}
+
+          <button
+            onClick={async () => {
+              if (!contactForm.name || !contactForm.email || !contactForm.message) return;
+              setContactStatus('sending');
+              try {
+                await emailjs.send(
+                  process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+                  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+                  {
+                    from_name: contactForm.name,
+                    from_email: contactForm.email,
+                    message: contactForm.message,
+                  },
+                  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+                );
+                setContactStatus('sent');
+                setContactForm({ name: '', email: '', message: '' });
+              } catch {
+                setContactStatus('error');
+              }
+            }}
+            disabled={contactStatus === 'sending' || !contactForm.name || !contactForm.email || !contactForm.message}
+            style={{background: contactStatus === 'sending' ? C.bgHover : C.accent, border:'none', borderRadius:'8px', padding:'12px', color:'white', fontSize:'13px', fontWeight:600, cursor: contactStatus === 'sending' ? 'not-allowed' : 'pointer', transition:'background 0.2s'}}>
+            {contactStatus === 'sending'
+              ? (language === 'en' ? 'Sending...' : 'Wird gesendet...')
+              : (language === 'en' ? 'Send message' : 'Nachricht senden')}
+          </button>
+        </div>
+      )}
+    </div>
+  </div>
+)}
       <style>{`
         @keyframes bounce {
           0%, 60%, 100% { transform: translateY(0); }
