@@ -101,6 +101,7 @@ export default function Home() {
   const [activeConvId, setActiveConvId] = useState<string>('new');
   const [savedConversations, setSavedConversations] = useState<{id: string, title: string, messages: Message[], time: string}[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
   const [showContact, setShowContact] = useState(false);
 const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
 const [contactStatus, setContactStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -215,6 +216,33 @@ const copyMessage = (text: string, index: number) => {
 
           <div style={{display:'flex', alignItems:'center', gap:'8px'}}>
             <span style={{fontSize:'11px', color:C.textMuted}} className="hide-mobile">Augsburg, DE</span>
+            <button
+onClick={() => {
+  if (navigator.share) {
+    navigator.share({
+      title: 'Tooba.ai — AI Portfolio',
+      text: language === 'en' 
+        ? 'Chat with an AI version of Tooba — Software Developer based in Augsburg' 
+        : 'Chatte mit einer KI-Version von Tooba — Software-Entwicklerin in Augsburg',
+      url: 'https://tooba-ai-beta.vercel.app/',
+    });
+  } else {
+    navigator.clipboard.writeText('https://tooba-ai-beta.vercel.app/');
+    setShareCopied(true);
+    setTimeout(() => setShareCopied(false), 2000);
+  }
+}}
+  style={{display:'flex', alignItems:'center', gap:'5px', background: shareCopied ? C.greenBg : C.bgCard, border:`1px solid ${shareCopied ? C.greenBorder : C.border}`, borderRadius:'8px', padding:'5px 12px', cursor:'pointer', flexShrink:0, transition:'all 0.2s'}}>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={shareCopied ? C.green : C.textSub} strokeWidth="2">
+    {shareCopied
+      ? <polyline points="20 6 9 17 4 12"/>
+      : <><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></>
+    }
+  </svg>
+  <span style={{fontSize:'11px', color: shareCopied ? C.green : C.textSub, fontWeight:600}}>
+    {shareCopied ? (language === 'en' ? 'Copied!' : 'Kopiert!') : (language === 'en' ? 'Share' : 'Teilen')}
+  </span>
+</button>
             <button onClick={() => setShowContact(true)}
   style={{display:'flex', alignItems:'center', gap:'5px', background:C.greenBg, border:`1px solid ${C.greenBorder}`, borderRadius:'8px', padding:'5px 12px', cursor:'pointer', flexShrink:0}}>
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="2">
