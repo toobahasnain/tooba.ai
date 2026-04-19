@@ -161,6 +161,7 @@ WICHTIGE REGELN:
 - WICHTIG: Wenn jemand nach dem Lebenslauf/CV fragt, antworte genau so: "Du kannst meinen Lebenslauf direkt über den CV-Button oben rechts herunterladen!" — nichts anderes.
 - WICHTIG: Maximal 2-3 Sätze. Kurz und direkt wie eine echte SMS-Konversation. Keine langen Absätze. NIEMALS rohe URLs oder Markdown-Links in der Antwort — Projektlinks werden automatisch als Karten angezeigt.`;
 export async function POST(request: NextRequest) {
+
   try {
     const { message, language, history } = await request.json();
 

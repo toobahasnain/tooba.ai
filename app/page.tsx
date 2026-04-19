@@ -129,6 +129,9 @@ const copyMessage = (text: string, index: number) => {
         body: JSON.stringify({ message: text, language, history: messages }),
       });
       const data = await res.json();
+      if (!res.ok || data.error) {
+  throw new Error(data.error || res.status.toString());
+}
       const aiMessage: Message = { role: 'assistant', content: data.response };
       const finalMessages = [...newMessages, aiMessage];
       setMessages(finalMessages);
@@ -147,12 +150,21 @@ const copyMessage = (text: string, index: number) => {
           prev.map(c => c.id === activeConvId ? { ...c, messages: finalMessages } : c)
         );
       }
-    } catch {
-      setMessages([...newMessages, {
-        role: 'assistant',
-        content: language === 'en' ? 'Sorry, something went wrong.' : 'Entschuldigung, etwas ist schiefgelaufen.'
-      }]);
-    } finally {
+    } catch (error: unknown) {
+  const errorMessage = error instanceof Error ? error.message : '';
+  const isQuota = errorMessage.includes('429') || errorMessage.includes('quota') || errorMessage.includes('RESOURCE_EXHAUSTED');
+  
+  setMessages([...newMessages, {
+    role: 'assistant',
+    content: isQuota
+      ? language === 'en'
+        ? "I'm getting a lot of visitors right now and have hit my limit for the moment! Please try again in a few minutes, or reach out directly at toobadeutsch@gmail.com — I'd love to chat! 😊"
+        : "Ich bekomme gerade viele Besucher und habe mein Limit erreicht! Bitte versuche es in ein paar Minuten erneut, oder schreib mir direkt an toobadeutsch@gmail.com 😊"
+      : language === 'en'
+        ? 'Something went wrong. Please try again in a moment.'
+        : 'Etwas ist schiefgelaufen. Bitte versuche es erneut.'
+  }]);
+} finally {
       setLoading(false);
     }
   };
