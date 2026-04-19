@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# tooba.ai — AI Portfolio
 
-## Getting Started
+> Chat with an AI version of me. Ask anything about my background, skills, projects, or availability.
 
-First, run the development server:
+**[→ Live Demo: tooba-ai-beta.vercel.app](https://tooba-ai-beta.vercel.app/)**
+
+---
+
+## What is this?
+
+Instead of a traditional portfolio that you scroll through, this is a conversational AI that answers questions about me — just like I would in person.
+
+Ask it anything:
+- *"What projects have you built?"*
+- *"Can Tooba work with AI APIs?"*
+- *"Is she available for a working student role?"*
+- *"Zeig mir ihre Projekte"* (it works in German too)
+
+---
+
+## Features
+
+- **AI chat** — powered by Google Gemini, answers as me in first person
+- **EN / DE toggle** — full German language support for German recruiters
+- **Project cards** — live links appear automatically when projects are mentioned
+- **CV download** — one click to download my PDF CV
+- **Chat history** — conversations saved in sidebar like ChatGPT
+- **Copy responses** — copy any answer with one click
+- **Mobile responsive** — works perfectly on phone at job fairs
+- **Dark premium UI** — built with Next.js, TypeScript, Tailwind CSS
+
+---
+
+## Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Framework | Next.js 14 + TypeScript |
+| Styling | Tailwind CSS + CSS-in-JS |
+| AI | Google Gemini API |
+| Deployment | Vercel |
+| Architecture | Full-stack — API routes built into Next.js, no separate backend |
+
+---
+
+## Run Locally
 
 ```bash
+# 1. Clone
+git clone https://github.com/toobahasnain/tooba.ai.git
+cd tooba.ai
+
+# 2. Install
+npm install
+
+# 3. Add environment variable
+# Create .env.local in root:
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# 4. Run
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How the AI works
 
-## Learn More
+The AI is powered by a detailed system prompt containing my real background — experience, projects, skills, education, achievements, languages, and personality. It answers every question in first person, naturally, like a real conversation.
 
-To learn more about Next.js, take a look at the following resources:
+When the language is switched to DE, the entire system prompt switches to German so responses feel natural, not translated.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+tooba-ai/
+├── app/
+│   ├── api/
+│   │   └── chat/
+│   │       └── route.ts      # Gemini API integration + system prompt
+│   ├── page.tsx               # Main chat UI
+│   ├── layout.tsx             # App layout + metadata
+│   └── globals.css            # Global styles
+├── public/
+│   ├── images/
+│   │   └── tooba.jpg          # Profile photo
+│   └── Syeda_Tooba_Hasnain_CV.pdf
+└── .env.local                 # API key (not committed)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Author
+
+**Syeda Tooba Hasnain** — Software Developer based in Augsburg, Germany
+
+- Portfolio: [tooba-ai-beta.vercel.app](https://tooba-ai-beta.vercel.app/)
+- LinkedIn: [linkedin.com/in/syeda-tooba-hasnain-a9a17119a](https://www.linkedin.com/in/syeda-tooba-hasnain-a9a17119a/)
+- GitHub: [github.com/toobahasnain](https://github.com/toobahasnain)
+- Email: toobadeutsch@gmail.com
+
+---
+
+*Built with Next.js · TypeScript · Gemini API · Deployed on Vercel*
