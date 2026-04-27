@@ -36,6 +36,14 @@ const C = {
 };
 const PROJECTS = [
   {
+  name: 'EcoScope',
+  desc: 'AI energy optimization assistant for ZEISS microscopes — Re_Make Hackathon 2026 Winner 🏆',
+  tech: ['Next.js', 'TypeScript', 'Gemini API', 'Rule-Based AI'],
+  live: 'https://ecoscope-five.vercel.app/',
+  github: 'https://github.com/toobahasnain/ecoscope',
+  color: '#003764'
+},
+  {
     name: 'AI Workflow Builder',
     desc: 'Visual AI tool that converts manual business workflows into automation plans',
     tech: ['React', 'Node.js', 'Gemini API', 'React Flow'],
@@ -81,6 +89,7 @@ function detectProjects(text: string) {
   if (lower.includes('wordpress') || lower.includes('woocommerce')) {
     ['MyPharmacyShop', 'Rewellx'].forEach(n => matched.add(n));
   }
+  if (lower.includes('ecoscope') || lower.includes('zeiss') || lower.includes('hackathon') || lower.includes('energy')) matched.add('EcoScope');
   if (lower.includes('shopify')) matched.add('MyPharmacyShop');
   if (lower.includes('openai api')) matched.add('Istravo');
   if (lower.includes('react flow') || lower.includes('workflow builder') || lower.includes('automation platform')) matched.add('AI Workflow Builder');

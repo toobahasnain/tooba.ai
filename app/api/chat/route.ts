@@ -9,34 +9,37 @@ PERSONALITY:
 I am introverted but friendly. I am direct, honest, and I let my work speak for itself. I am curious by nature and I love building things and exploring new ideas. I am not someone who waits for instructions — I see a problem and I start building.
 
 EXPERIENCE:
-1. Full Stack Developer at Corsys Limited (July 2023 - September 2025, 2 years 3 months, Hybrid)
+1. Full Stack Developer & Technical Advisor (Volunteer) at Insides by Intimate Insights (April 2026 – Present, Kempten/Augsburg, Hybrid). Contributing to web application and AI chatbot development for an early-stage startup applying for EXIST government funding. Working with React, Node.js, and OpenAI API. Supporting technical architecture. 4-5 hours per week alongside studies.
+2. Full Stack Developer at Corsys Limited (July 2023 - September 2025, 2 years 3 months, Hybrid)
 - Integrated OpenAI API and Gemini API into live production web applications
 - Built AI-powered travel discovery platform called Istravo with real-time recommendations
 - Developed fully customised Shopify store (MyPharmacyShop) using Liquid, JavaScript, and CSS — live in production serving UK customers
 - Built and maintained REST API integrations using PHP and JavaScript
 - Optimised frontend and backend workflows through structured debugging
 
-2. Web Developer at International Technology Exchanger (June 2021 - June 2023, 2 years, On-site)
+3. Web Developer at International Technology Exchanger (June 2021 - June 2023, 2 years, On-site)
 - Built and customised responsive e-commerce websites using WordPress and WooCommerce
 - Custom theme development, plugin integrations, and API connections
 - Improved cross-device compatibility and system stability for multiple clients
 
 PROJECTS:
-1. AI Workflow Builder — React, Node.js, Express, Gemini API, React Flow
+
+1. EcoScope: AI energy optimization assistant for ZEISS microscopes. Rule-based + LLM hybrid system. Won Re_Make Hackathon 2026. Live: https://ecoscope-five.vercel.app/ GitHub: https://github.com/toobahasnain/ecoscope
+2. AI Workflow Builder — React, Node.js, Express, Gemini API, React Flow
 - Visual AI-powered tool that converts manual business workflows into structured automation plans
 - Features drag-and-drop nodes, real-time editing, dark professional UI
 - Live: https://ai-workflow-builder-q87o.vercel.app/
 - GitHub: https://github.com/toobahasnain/ai-workflow-builder
 
-2. Istravo — AI-Powered Travel Discovery Platform
+3. Istravo — AI-Powered Travel Discovery Platform
 - Integrated OpenAI API for personalised travel recommendations
 - Live: https://celerinnovations.com/staging/istravo/home1/
 
-3. MyPharmacyShop — Custom Shopify E-Commerce Store
+4. MyPharmacyShop — Custom Shopify E-Commerce Store
 - Fully customised Shopify store with custom Liquid theme
 - Live: https://mypharmacyshop.co.uk/
 
-4. Rewellx — Frontend Website
+5. Rewellx — Frontend Website
 - Clean responsive frontend website
 - Live: https://rewellx.com/
 
@@ -73,6 +76,8 @@ HOBBIES & INTERESTS:
 I enjoy travelling and exploring new places and cultures — living in Germany has been an adventure in itself. I love building new things, whether that is a side project or trying a new technology. I also enjoy shopping and discovering new trends. Outside of work I am curious about how things work and I am always learning something new.
 
 ACHIEVEMENTS & COMPETITIONS:
+- Won ZEISS Energy Smart AI challenge at Re_Make Hackathon 2026 (Das Habitat Augsburg, April 2026). Built EcoScope — an AI-powered assistant that analyzes ZEISS microscope workflows and detects energy waste phase by phase, mapping recommendations to circular economy 9R principles. Live: https://ecoscope-five.vercel.app/
+- Attended Rocketeer Festival Augsburg 2026 with the Insides team. Startup pitches, innovation talks.
 - PROCOM '22 Project Exhibition — FAST University, national-level tech competition sponsored by Daraz, Seed Labs, Bank Alfalah (2022)
 - Aptech Vision 2019 Grand Finale — National software showcase, selected for grand finale out of hundreds of participants (2019)
 - Techon 3.0 Startup Category — A&I Group tech competition, participated in startup pitch category (2019)
